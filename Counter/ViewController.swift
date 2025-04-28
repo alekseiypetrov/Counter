@@ -7,16 +7,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    var count: Int = 0
-    let formatter = DateFormatter()
+final class ViewController: UIViewController {
+    private var count: Int = 0
+    private let formatter = DateFormatter()
     
-    @IBOutlet weak var historyOfChanges: UITextView!
-    @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var decrementButton: UIButton!
-    @IBOutlet weak var incrementButton: UIButton!
-    @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var pushButton: UIButton!
+    @IBOutlet weak private var historyOfChanges: UITextView!
+    @IBOutlet weak private var resetButton: UIButton!
+    @IBOutlet weak private var decrementButton: UIButton!
+    @IBOutlet weak private var incrementButton: UIButton!
+    @IBOutlet weak private var countLabel: UILabel!
+    @IBOutlet weak private var pushButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,21 +38,21 @@ class ViewController: UIViewController {
     }
 
     // обработка нажатия кнопки из базового задания
-    @IBAction func buttonDidTapped(_ sender: Any) {
+    @IBAction private func buttonDidTapped(_ sender: Any) {
         count += 1
         countLabel.text = "ЗНАЧЕНИЕ СЧЁТЧИКА:\n\(count)"
         historyOfChanges.insertText("\n\(formatter.string(from: Date())): значение изменено на +1")
     }
     
     // обработка нажатия кнопки "+"
-    @IBAction func incrementCounter(_ sender: Any) {
+    @IBAction private func incrementCounter(_ sender: Any) {
         count += 1
         countLabel.text = "ЗНАЧЕНИЕ СЧЁТЧИКА:\n\(count)"
         historyOfChanges.insertText("\n\(formatter.string(from: Date())): значение изменено на +1")
     }
     
-    // обработка нажатия кнопки "-"
-    @IBAction func decrementCounter(_ sender: Any) {
+    /// обработка нажатия кнопки "-"
+    @IBAction private func decrementCounter(_ sender: Any) {
         if count > 0 {
             count -= 1
             historyOfChanges.insertText("\n\(formatter.string(from: Date())): значение изменено на -1")
@@ -63,8 +63,11 @@ class ViewController: UIViewController {
         countLabel.text = "ЗНАЧЕНИЕ СЧЁТЧИКА:\n\(count)"
     }
     
-    // обработка нажатия кнопки "Сброс"
-    @IBAction func resetCounter(_ sender: Any) {
+    /// Обработка нажатия кнопки "Сброс"
+    /// - Parameter sender: Объект, у которого возникло событие (кнопка "Сброс")
+    ///
+    /// Когда нажимается данная кнопка, происходит обнуление счётчика (переменной count присваивается значение 0), в лейбе отображается соответствующее значение счётчика, а в журнале истории появляется соответствующая информация о сбросе
+    @IBAction private func resetCounter(_ sender: Any) {
         count = 0
         countLabel.text = "ЗНАЧЕНИЕ СЧЁТЧИКА:\n\(count)"
         historyOfChanges.insertText("\n\(formatter.string(from: Date())): значение сброшено")
