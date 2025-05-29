@@ -23,11 +23,13 @@ final class ViewController: UIViewController {
         // настройка формата даты и времени
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         // настройка журнала изменений
-        historyOfChanges.text = "ИСТОРИЯ ИЗМЕНЕНИЙ:"
+        historyOfChanges.text = UserDefaults.standard.string(forKey: "history.historyOfChanges") ?? "ИСТОРИЯ ИЗМЕНЕНИЙ:"
         historyOfChanges.isEditable = false
         historyOfChanges.layer.borderWidth = 1
         historyOfChanges.layer.borderColor = UIColor.gray.cgColor
         // настройка лейбла с показанием счетчика
+        let countFromMemory = UserDefaults.standard.integer(forKey: "lastValue.count")
+        count = countFromMemory
         countLabel.text = "ЗНАЧЕНИЕ СЧЁТЧИКА:\n\(count)"
         countLabel.textAlignment = .center
         // настройка цветов кнопок
@@ -37,6 +39,11 @@ final class ViewController: UIViewController {
         decrementButton.tintColor = .blue
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        UserDefaults.standard.set(count, forKey: "lastValue.count")
+        UserDefaults.standard.set(historyOfChanges.text, forKey: "history.historyOfChanges")
+    }
+    
     // обработка нажатия кнопки из базового задания
     @IBAction private func buttonDidTapped(_ sender: Any) {
         count += 1
